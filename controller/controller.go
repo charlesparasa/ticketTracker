@@ -13,6 +13,7 @@ var config = Config{}
 
 
 func CreateTicketEndpoint(w http.ResponseWriter, req *http.Request) {
+
 	var ticketDao dao.TicketDAO
 	var input Ticket
 	err := json.NewDecoder(req.Body).Decode(&input)
@@ -20,9 +21,9 @@ func CreateTicketEndpoint(w http.ResponseWriter, req *http.Request) {
 		fmt.Errorf("invalid input params")
 		return
 	}
-
+	fmt.Println("input" ,input )
 	if input.AlaramTriggeredTime == "" || input.TicketAssignedTime == "" || input.TikcetEstimatedTime == "" || input.TikcetStatus == "" {
-		fmt.Errorf("invalid input params")
+		fmt.Println("invalid input params")
 		return
 	} else {
 		ticketDao.Connect()
@@ -32,7 +33,9 @@ func CreateTicketEndpoint(w http.ResponseWriter, req *http.Request) {
 			return
 		}
 	}
-	json.NewEncoder(w).Encode(input)
+
+	//json.NewEncoder(w).Encode(input)
+
 	respondWithJson(w, http.StatusCreated, input)
 
 }
