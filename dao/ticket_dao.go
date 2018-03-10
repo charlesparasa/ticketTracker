@@ -5,6 +5,7 @@ import (
 	. "bitbucket.org/tekion/ticketTracker/model"
 	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
+	"fmt"
 )
 
 type TicketDAO struct {
@@ -19,12 +20,14 @@ const (
 )
 
 // Establish a connection to database
-func (m *TicketDAO) Connect() {
+func (m *TicketDAO) Connect() *mgo.Database {
+	fmt.Println(" From from createTicket")
 	session, err := mgo.Dial(m.Server)
 	if err != nil {
 		log.Fatal(err)
 	}
 	db = session.DB(m.Database)
+	return db
 }
 
 // Find list of Ticket

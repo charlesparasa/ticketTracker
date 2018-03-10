@@ -12,8 +12,10 @@ type Config struct {
 }
 
 // Read and parse the configuration file
-func (c *Config) Read() {
+func (c *Config) Read() error {
 	if _, err := toml.DecodeFile("config.toml", &c); err != nil {
 		log.Fatal(err)
+		return err
 	}
+	return nil
 }
